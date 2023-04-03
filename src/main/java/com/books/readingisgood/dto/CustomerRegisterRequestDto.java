@@ -17,13 +17,13 @@ import lombok.NoArgsConstructor;
 public class CustomerRegisterRequestDto {
 
     @Size(max = 50)
-    @NotNull(message = "username cannot be null")
+    @NotNull
     private String username;
 
-    @NotNull(message = "email cannot be null")
+    @NotNull
     private String email;
 
-    @NotNull(message = "password cannot be null")
+    @NotNull
     private String password;
 
 }

@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CustomerLoginRequestDto {
 
-    @NotNull(message = "Email cannot be null")
+    @NotNull
     private String email;
 
-    @NotNull(message = "Password cannot be null")
+    @NotNull
     private String password;
 }
