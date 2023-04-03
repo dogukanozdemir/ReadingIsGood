@@ -1,4 +1,4 @@
-package com.books.readingisgood.dto;
+package com.books.readingisgood.dto.authentication;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomerRegisterResponseDto {
+public class AuthenticationResponseDto {
 
-    private String message;
+    private String token;
 }
+
+
