@@ -1,10 +1,9 @@
 package com.books.readingisgood.controller;
 
-import com.books.readingisgood.dto.ResponseDto;
+import com.books.readingisgood.dto.customer.CustomerDto;
 import com.books.readingisgood.dto.customer.UpdateCustomerRequestDto;
 import com.books.readingisgood.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +19,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PutMapping("/customer")
-    public ResponseEntity<ResponseDto> updateCustomer(@Validated @RequestBody UpdateCustomerRequestDto requestDto){
+    public ResponseEntity<CustomerDto> updateCustomer(@Validated @RequestBody UpdateCustomerRequestDto requestDto){
         return ResponseEntity.ok(customerService.updateCustomer(requestDto));
     }
 }

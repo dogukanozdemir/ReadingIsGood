@@ -1,13 +1,12 @@
 package com.books.readingisgood.service;
 
 import com.books.readingisgood.authentication.util.AuthUtil;
-import com.books.readingisgood.dto.ResponseDto;
+
 import com.books.readingisgood.dto.customer.CustomerDto;
 import com.books.readingisgood.dto.customer.UpdateCustomerRequestDto;
 import com.books.readingisgood.entity.Customer;
 import com.books.readingisgood.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.util.CustomObjectInputStream;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class CustomerService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public ResponseDto updateCustomer(UpdateCustomerRequestDto requestDto){
+    public CustomerDto updateCustomer(UpdateCustomerRequestDto requestDto){
         Customer loggedInCustomer = authUtil.getCurrentCustomer();
         if(!loggedInCustomer.getEmail().equals(requestDto.getEmail())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
@@ -35,14 +34,10 @@ public class CustomerService {
         loggedInCustomer.setUsername(requestDto.getUsername());
         customerRepository.save(loggedInCustomer);
 
-        return ResponseDto.builder()
-                .message("Customer updated successfully")
-                .object(
-                        CustomerDto.builder()
-                                .id(loggedInCustomer.getId())
-                                .username(loggedInCustomer.getUsername())
-                                .email(loggedInCustomer.getEmail())
-                                .build()
-                ).build();
+        return CustomerDto.builder()
+                    .id(loggedInCustomer.getId())
+                    .username(loggedInCustomer.getUsername())
+                    .email(loggedInCustomer.getEmail())
+                    .build();
     }
 }
