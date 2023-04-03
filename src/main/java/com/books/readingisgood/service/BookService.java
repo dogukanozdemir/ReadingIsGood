@@ -3,6 +3,7 @@ package com.books.readingisgood.service;
 import com.books.readingisgood.authentication.util.AuthUtil;
 import com.books.readingisgood.dto.book.BookDto;
 import com.books.readingisgood.dto.book.CreateBookRequestDto;
+import com.books.readingisgood.dto.book.UpdateBookStockRequestDto;
 import com.books.readingisgood.entity.Book;
 import com.books.readingisgood.entity.Customer;
 import com.books.readingisgood.repository.BookRepository;
@@ -11,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +36,28 @@ public class BookService {
                 .quantityInStock(book.getQuantityInStock())
                 .totalPages(book.getTotalPages())
                 .build();
+    }
+
+    public BookDto updateBookStock(UpdateBookStockRequestDto requestDto,Long bookId){
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("The book with id %d does not exist", bookId)));
+
+        if (requestDto.getUpdatedStock() < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Stock quantity cannot be lower than 0");
+        }
+
+        book.setQuantityInStock(requestDto.getUpdatedStock());
+        bookRepository.save(book);
+
+        return BookDto.builder()
+                .id(book.getId())
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .quantityInStock(book.getQuantityInStock())
+                .totalPages(book.getTotalPages())
+                .build();
+
     }
 }
