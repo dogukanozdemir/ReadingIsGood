@@ -8,6 +8,7 @@ import com.books.readingisgood.dto.CustomerRegisterRequestDto;
 import com.books.readingisgood.dto.CustomerRegisterResponseDto;
 import com.books.readingisgood.entity.Customer;
 import com.books.readingisgood.enums.Role;
+import com.books.readingisgood.exception.ReadingIsGoodException;
 import com.books.readingisgood.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class CustomerService {
 
     public CustomerRegisterResponseDto registerCustomer(CustomerRegisterRequestDto registerRequestDto){
         if(customerRepository.findByEmail(registerRequestDto.getEmail()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            throw new ReadingIsGoodException(HttpStatus.BAD_REQUEST, "Duplicate Customer",
                     String.format("Customer with '%s' email already exists", registerRequestDto.getEmail()));
         }
 
@@ -58,7 +59,7 @@ public class CustomerService {
                     .token(token)
                     .build();
         } else {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
+            throw new ReadingIsGoodException(HttpStatus.UNAUTHORIZED, "Invalid credentials", "Invalid username or password entered");
         }
     }
 
