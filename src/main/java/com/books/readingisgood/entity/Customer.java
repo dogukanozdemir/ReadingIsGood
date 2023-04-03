@@ -1,5 +1,6 @@
 package com.books.readingisgood.entity;
 
+import com.books.readingisgood.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,5 +30,8 @@ public class Customer {
     private String username;
 
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 }

@@ -7,6 +7,7 @@ import com.books.readingisgood.dto.CustomerLoginResponseDto;
 import com.books.readingisgood.dto.CustomerRegisterRequestDto;
 import com.books.readingisgood.dto.CustomerRegisterResponseDto;
 import com.books.readingisgood.entity.Customer;
+import com.books.readingisgood.enums.Role;
 import com.books.readingisgood.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,7 @@ public class CustomerService {
                 .username(registerRequestDto.getUsername())
                 .email(registerRequestDto.getEmail())
                 .password(passwordEncoder.encode(registerRequestDto.getPassword()))
+                .role(Role.USER)
                 .build();
         customerRepository.save(customer);
 
