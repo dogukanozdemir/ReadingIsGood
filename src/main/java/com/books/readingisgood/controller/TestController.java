@@ -1,5 +1,6 @@
 package com.books.readingisgood.controller;
 
+import com.books.readingisgood.authentication.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class TestController {
 
+    private final AuthUtil authUtil;
+
     @GetMapping(path = "/customers")
     public ResponseEntity<String> authendpoint(){
-        log.info("hereeeeeeee");
-        return ResponseEntity.ok("Nice");
+
+        return ResponseEntity.ok(authUtil.getCurrentCustomer().getUsername());
     }
 }
