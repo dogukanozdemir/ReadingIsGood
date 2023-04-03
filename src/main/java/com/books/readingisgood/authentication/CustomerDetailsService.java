@@ -4,6 +4,7 @@ import com.books.readingisgood.authentication.dto.AuthenticatedCustomer;
 import com.books.readingisgood.entity.Customer;
 import com.books.readingisgood.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,7 +28,7 @@ public class CustomerDetailsService implements UserDetailsService {
         return new AuthenticatedCustomer(
                 customer.getEmail(),
                 customer.getPassword(),
-                List.of(),
+                List.of((GrantedAuthority) () -> customer.getRole().name()),
                 customer
         );
     }

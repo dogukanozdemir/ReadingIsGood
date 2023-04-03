@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -13,9 +12,9 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class CustomerLoginRequestDto {
 
-    @NotBlank
+    @NotNull(message = "First name must not be empty")
     private String email;
 
-    @NotBlank
+    @NotNull(message = "Last name must not be empty")
     private String password;
 }
