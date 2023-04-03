@@ -7,9 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,8 +18,6 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
-    @Email
     @Column(unique = true)
     private String email;
 

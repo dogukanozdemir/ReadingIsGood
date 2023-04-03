@@ -1,10 +1,10 @@
 package com.books.readingisgood.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class CustomerLoginRequestDto {
 
-    @NotNull(message = "First name must not be empty")
+    @NotNull(message = "Email cannot be null")
     private String email;
 
-    @NotNull(message = "Last name must not be empty")
+    @NotNull(message = "Password cannot be null")
     private String password;
 }
