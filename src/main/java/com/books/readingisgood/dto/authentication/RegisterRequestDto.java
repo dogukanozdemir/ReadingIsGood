@@ -1,7 +1,5 @@
-package com.books.readingisgood.dto;
+package com.books.readingisgood.dto.authentication;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -14,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomerRegisterRequestDto {
+public class RegisterRequestDto {
 
     @Size(max = 50)
     @NotNull

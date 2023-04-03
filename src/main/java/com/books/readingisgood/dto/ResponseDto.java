@@ -1,6 +1,5 @@
 package com.books.readingisgood.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomerLoginRequestDto {
+public class ResponseDto {
 
-    @NotNull
-    private String email;
-
-    @NotNull
-    private String password;
+    private String message;
+    private Object object;
 }

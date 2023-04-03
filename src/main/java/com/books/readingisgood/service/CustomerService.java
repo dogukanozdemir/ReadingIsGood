@@ -1,66 +1,48 @@
 package com.books.readingisgood.service;
 
-import com.books.readingisgood.authentication.jwt.JwtService;
-import com.books.readingisgood.dto.CustomerLoginRequestDto;
-import com.books.readingisgood.dto.CustomerLoginResponseDto;
-import com.books.readingisgood.dto.CustomerRegisterRequestDto;
-import com.books.readingisgood.dto.CustomerRegisterResponseDto;
+import com.books.readingisgood.authentication.util.AuthUtil;
+import com.books.readingisgood.dto.ResponseDto;
+import com.books.readingisgood.dto.customer.CustomerDto;
+import com.books.readingisgood.dto.customer.UpdateCustomerRequestDto;
 import com.books.readingisgood.entity.Customer;
-import com.books.readingisgood.enums.Role;
 import com.books.readingisgood.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.util.CustomObjectInputStream;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
+
+    private final AuthUtil authUtil;
+
     private final PasswordEncoder passwordEncoder;
 
-    public CustomerRegisterResponseDto registerCustomer(CustomerRegisterRequestDto registerRequestDto){
-        if(customerRepository.findByEmail(registerRequestDto.getEmail()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    String.format("Customer with '%s' email already exists", registerRequestDto.getEmail()));
+    public ResponseDto updateCustomer(UpdateCustomerRequestDto requestDto){
+        Customer loggedInCustomer = authUtil.getCurrentCustomer();
+        if(!loggedInCustomer.getEmail().equals(requestDto.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "You are not authorized to update this customer. Please ensure you are logged in as the correct customer before attempting to update.");
         }
 
-        Customer customer = Customer.builder()
-                .username(registerRequestDto.getUsername())
-                .email(registerRequestDto.getEmail())
-                .password(passwordEncoder.encode(registerRequestDto.getPassword()))
-                .role(Role.USER)
-                .build();
-        customerRepository.save(customer);
+        loggedInCustomer.setEmail(requestDto.getEmail());
+        loggedInCustomer.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+        loggedInCustomer.setUsername(requestDto.getUsername());
+        customerRepository.save(loggedInCustomer);
 
-        return CustomerRegisterResponseDto.builder()
-                .message(String.format(
-                        "%s registered successfully, please login using your credentials to generate a token.",
-                        registerRequestDto.getEmail()
-                )).build();
+        return ResponseDto.builder()
+                .message("Customer updated successfully")
+                .object(
+                        CustomerDto.builder()
+                                .id(loggedInCustomer.getId())
+                                .username(loggedInCustomer.getUsername())
+                                .email(loggedInCustomer.getEmail())
+                                .build()
+                ).build();
     }
-
-    public CustomerLoginResponseDto loginCustomer(CustomerLoginRequestDto loginRequestDto){
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDto.getEmail(), loginRequestDto.getPassword()));
-
-        if (authentication.isAuthenticated()) {
-            String token = jwtService.generateToken(loginRequestDto.getEmail());
-            return CustomerLoginResponseDto.builder()
-                    .token(token)
-                    .build();
-        } else {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password entered");
-        }
-    }
-
 }
