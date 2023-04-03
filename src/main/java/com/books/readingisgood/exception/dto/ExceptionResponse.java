@@ -4,13 +4,14 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Data
 @Builder
 public class ExceptionResponse {
 
     private LocalDateTime time;
-    private String message;
-    private String details;
+    private String error;
+    private Map<String,String> errors;
 }
 

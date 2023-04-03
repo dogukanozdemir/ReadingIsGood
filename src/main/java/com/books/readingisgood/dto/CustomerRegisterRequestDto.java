@@ -1,13 +1,14 @@
 package com.books.readingisgood.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
@@ -16,14 +17,13 @@ import javax.validation.constraints.Size;
 public class CustomerRegisterRequestDto {
 
     @Size(max = 50)
-    @NotBlank
+    @NotNull(message = "username cannot be null")
     private String username;
 
-    @NotBlank
-    @Email
+    @NotNull(message = "email cannot be null")
     private String email;
 
-    @NotBlank
+    @NotNull(message = "password cannot be null")
     private String password;
 
 }

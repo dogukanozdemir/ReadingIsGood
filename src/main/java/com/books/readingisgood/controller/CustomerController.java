@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -31,7 +30,7 @@ public class CustomerController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<CustomerLoginResponseDto> loginCustomer(@Valid @RequestBody CustomerLoginRequestDto requestDto){
+    public ResponseEntity<CustomerLoginResponseDto> loginCustomer(@Validated @RequestBody CustomerLoginRequestDto requestDto){
         return ResponseEntity.ok(customerService.loginCustomer(requestDto));
     }
 }
