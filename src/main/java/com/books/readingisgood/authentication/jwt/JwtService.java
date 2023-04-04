@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +33,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(Date.from(Instant.now().plus(2, ChronoUnit.HOURS)))
                 .signWith(generateSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
