@@ -16,9 +16,13 @@ public class PlaceOrderResponseDto {
 
     private Long id;
 
-    private LocalDate purchaseDate;
-
     private Long bookId;
+
+    private String bookName;
+
+    private Double bookPrice;
+
+    private LocalDate purchaseDate;
 
     private Long customerId;
 }

@@ -61,6 +61,8 @@ public class BookOrderService {
 
         BookOrder bookOrder = BookOrder.builder()
                 .bookId(bookId)
+                .bookName(book.getTitle())
+                .bookPrice(book.getPrice())
                 .purchaseDate(purchaseDate)
                 .customerId(currentCustomer.getId())
                 .build();
@@ -69,8 +71,10 @@ public class BookOrderService {
         return PlaceOrderResponseDto.builder()
                 .id(bookOrder.getId())
                 .bookId(book.getId())
-                .customerId(bookOrder.getCustomerId())
+                .bookName(book.getTitle())
+                .bookPrice(bookOrder.getBookPrice())
                 .purchaseDate(bookOrder.getPurchaseDate())
+                .customerId(bookOrder.getCustomerId())
                 .build();
     }
 }
