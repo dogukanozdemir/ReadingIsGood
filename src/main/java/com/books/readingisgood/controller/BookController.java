@@ -26,7 +26,7 @@ public class BookController {
     @PatchMapping(value = "/book/{id}")
     public ResponseEntity<BookDto> updateBookStock(@Validated @RequestBody UpdateBookStockRequestDto requestDto,
                                                    @PathVariable(value = "id") Long id){
-        return ResponseEntity.ok(bookService.updateBookStock(requestDto,id));
+        return ResponseEntity.ok(bookService.updateBookStockById(requestDto,id));
 
     }
 

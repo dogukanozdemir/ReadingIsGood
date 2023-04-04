@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -25,6 +26,7 @@ public class BookService {
         Book book = Book.builder()
                 .title(requestDto.getTitle())
                 .author(requestDto.getAuthor())
+                .price(requestDto.getPrice())
                 .quantityInStock(requestDto.getQuantityInStock())
                 .totalPages(requestDto.getTotalPages())
                 .build();
@@ -33,12 +35,13 @@ public class BookService {
                 .id(book.getId())
                 .title(book.getTitle())
                 .author(book.getAuthor())
+                .price(book.getPrice())
                 .quantityInStock(book.getQuantityInStock())
                 .totalPages(book.getTotalPages())
                 .build();
     }
 
-    public BookDto updateBookStock(UpdateBookStockRequestDto requestDto,Long bookId){
+    public BookDto updateBookStockById(UpdateBookStockRequestDto requestDto,Long bookId){
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         String.format("The book with id %d does not exist", bookId)));
@@ -59,5 +62,12 @@ public class BookService {
                 .totalPages(book.getTotalPages())
                 .build();
 
+    }
+
+    @Transactional
+    public void updateBookStockByEntity(Book book, int updateStock)
+    {
+        book.setQuantityInStock(updateStock);
+        bookRepository.save(book);
     }
 }
