@@ -25,7 +25,9 @@ public class BookOrder {
 
     private String bookName;
 
-    private Double bookPrice;
+    private Double paidAmount;
+
+    private Integer purchasedAmount;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate purchaseDate;

@@ -19,7 +19,9 @@ public class OrderDto {
 
     private String bookName;
 
-    private Double bookPrice;
+    private Double paidAmount;
+
+    private int purchasedAmount;
 
     private LocalDate purchaseDate;
 

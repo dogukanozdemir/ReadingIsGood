@@ -39,7 +39,7 @@ public class BookOrderService {
     @Transactional
     public OrderDto placeAnOrder(PlaceOrderRequestDto requestDto){
         Customer currentCustomer = authUtil.getCurrentCustomer();
-        Long bookId = requestDto.getBookId();
+        Long bookId = requestDto.getBookId();//
         Book book = entityManager.find(Book.class, bookId, LockModeType.PESSIMISTIC_WRITE);
         if(book == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -47,9 +47,12 @@ public class BookOrderService {
         }
 
         int currentStockQuantity = book.getQuantityInStock();
-        if(currentStockQuantity < 1){
+        if(currentStockQuantity < requestDto.getAmount()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("Book with %d isn't in stock, Please try again in a few days while we restock",bookId));
+                    String.format("You ordered to buy %d but there is only %d left from the book you requested %d",
+                            requestDto.getAmount(),
+                            currentStockQuantity,
+                            bookId));
         }
 
         LocalDate purchaseDate = DateValidator.validate(requestDto.getPurchaseDate());
@@ -64,7 +67,8 @@ public class BookOrderService {
         BookOrder bookOrder = BookOrder.builder()
                 .bookId(bookId)
                 .bookName(book.getTitle())
-                .bookPrice(book.getPrice())
+                .purchasedAmount(requestDto.getAmount())
+                .paidAmount(requestDto.getAmount() * book.getPrice())
                 .purchaseDate(purchaseDate)
                 .customerId(currentCustomer.getId())
                 .build();
@@ -74,7 +78,8 @@ public class BookOrderService {
                 .id(bookOrder.getId())
                 .bookId(book.getId())
                 .bookName(book.getTitle())
-                .bookPrice(bookOrder.getBookPrice())
+                .paidAmount(bookOrder.getPaidAmount())
+                .purchasedAmount(bookOrder.getPurchasedAmount())
                 .purchaseDate(bookOrder.getPurchaseDate())
                 .customerId(bookOrder.getCustomerId())
                 .build();
@@ -87,7 +92,8 @@ public class BookOrderService {
                                 .id(bookOrder.getId())
                                 .bookId(bookOrder.getBookId())
                                 .bookName(bookOrder.getBookName())
-                                .bookPrice(bookOrder.getBookPrice())
+                                .purchasedAmount(bookOrder.getPurchasedAmount())
+                                .paidAmount(bookOrder.getPaidAmount())
                                 .purchaseDate(bookOrder.getPurchaseDate())
                                 .customerId(bookOrder.getCustomerId())
                                 .build()
@@ -108,7 +114,8 @@ public class BookOrderService {
                                 .id(bookOrder.getId())
                                 .bookId(bookOrder.getBookId())
                                 .bookName(bookOrder.getBookName())
-                                .bookPrice(bookOrder.getBookPrice())
+                                .purchasedAmount(bookOrder.getPurchasedAmount())
+                                .paidAmount(bookOrder.getPaidAmount())
                                 .purchaseDate(bookOrder.getPurchaseDate())
                                 .customerId(bookOrder.getCustomerId())
                                 .build()
@@ -125,7 +132,8 @@ public class BookOrderService {
                                     .id(bookOrder.getId())
                                     .bookId(bookOrder.getBookId())
                                     .bookName(bookOrder.getBookName())
-                                    .bookPrice(bookOrder.getBookPrice())
+                                    .purchasedAmount(bookOrder.getPurchasedAmount())
+                                    .paidAmount(bookOrder.getPaidAmount())
                                     .purchaseDate(bookOrder.getPurchaseDate())
                                     .customerId(bookOrder.getCustomerId())
                                     .build()
