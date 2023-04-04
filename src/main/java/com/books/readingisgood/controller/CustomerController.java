@@ -2,14 +2,12 @@ package com.books.readingisgood.controller;
 
 import com.books.readingisgood.dto.customer.CustomerDto;
 import com.books.readingisgood.dto.customer.UpdateCustomerRequestDto;
+import com.books.readingisgood.dto.order.OrderByCustomerPageDto;
 import com.books.readingisgood.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/service")
@@ -18,8 +16,11 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    @PutMapping("/customer")
-    public ResponseEntity<CustomerDto> updateCustomer(@Validated @RequestBody UpdateCustomerRequestDto requestDto){
-        return ResponseEntity.ok(customerService.updateCustomer(requestDto));
+    @GetMapping("/customer/orders")
+    public ResponseEntity<OrderByCustomerPageDto> updateCustomer(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize){
+
+        return ResponseEntity.ok(customerService.getCustomerOrders(pageNo,pageSize));
     }
 }
