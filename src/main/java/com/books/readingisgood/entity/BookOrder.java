@@ -5,27 +5,27 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class Book {
-
+public class BookOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String title;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private LocalDate purchaseDate;
 
-    private String author;
+    private Long bookId;
 
-    private Double price;
-
-    private Integer quantityInStock;
-
-    private Integer totalPages;
+    private Long customerId;
 
 }
