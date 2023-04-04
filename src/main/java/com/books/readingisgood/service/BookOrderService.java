@@ -50,7 +50,7 @@ public class BookOrderService {
                     String.format("Book with %d isn't in stock, Please try again in a few days while we restock",bookId));
         }
 
-        LocalDate purchaseDate = DateValidator.isValidDate(requestDto.getPurchaseDate());
+        LocalDate purchaseDate = DateValidator.validate(requestDto.getPurchaseDate());
         if(purchaseDate == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Invalid date, please make sure the date provided matches the pattern 'yyyy-MM-dd'");
@@ -80,6 +80,27 @@ public class BookOrderService {
 
     public List<OrderDto> getAllOrders(){
         return orderRepository.findAll().stream()
+                .map(
+                        bookOrder -> OrderDto.builder()
+                                .id(bookOrder.getId())
+                                .bookId(bookOrder.getBookId())
+                                .bookName(bookOrder.getBookName())
+                                .bookPrice(bookOrder.getBookPrice())
+                                .purchaseDate(bookOrder.getPurchaseDate())
+                                .customerId(bookOrder.getCustomerId())
+                                .build()
+                ).toList();
+    }
+
+    public List<OrderDto> getAllOrdersBetween(String start, String end){
+        LocalDate startDate = DateValidator.validate(start);
+        LocalDate endDate = DateValidator.validate(end);
+        if(startDate == null || endDate == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Invalid date, please make sure the date provided matches the pattern 'yyyy-MM-dd'");
+        }
+        return orderRepository.findByPurchaseDateBetween(startDate,endDate)
+                .stream()
                 .map(
                         bookOrder -> OrderDto.builder()
                                 .id(bookOrder.getId())
