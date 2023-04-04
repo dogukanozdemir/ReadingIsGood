@@ -26,4 +26,11 @@ public class BookOrderController {
     public ResponseEntity<List<OrderDto>> getOrders(){
         return ResponseEntity.ok(bookOrderService.getAllOrders());
     }
+
+    @GetMapping(value = "/orders/dateInterval")
+    public ResponseEntity<List<OrderDto>> getOrdersByDateInterval(@RequestParam("start") String startDate,
+                                                                  @RequestParam("end") String endDate){
+
+        return ResponseEntity.ok(bookOrderService.getAllOrdersBetween(startDate,endDate));
+    }
 }
