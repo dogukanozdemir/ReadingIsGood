@@ -3,10 +3,11 @@ package com.books.readingisgood.service;
 
 import com.books.readingisgood.authentication.util.AuthUtil;
 import com.books.readingisgood.dto.order.PlaceOrderRequestDto;
-import com.books.readingisgood.dto.order.PlaceOrderResponseDto;
+import com.books.readingisgood.dto.order.OrderDto;
 import com.books.readingisgood.entity.Book;
 import com.books.readingisgood.entity.BookOrder;
 import com.books.readingisgood.entity.Customer;
+import com.books.readingisgood.repository.BookRepository;
 import com.books.readingisgood.repository.OrderRepository;
 import com.books.readingisgood.validation.DateValidator;
 import jakarta.persistence.EntityManager;
@@ -19,23 +20,22 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class BookOrderService {
-
+    private final BookRepository bookRepository;
     private final OrderRepository orderRepository;
-
     private final BookService bookService;
-
     private final EntityManager entityManager;
-
     private final AuthUtil authUtil;
 
     @Transactional
-    public PlaceOrderResponseDto placeAnOrder(PlaceOrderRequestDto requestDto){
+    public OrderDto placeAnOrder(PlaceOrderRequestDto requestDto){
         Customer currentCustomer = authUtil.getCurrentCustomer();
         Long bookId = requestDto.getBookId();
         Book book = entityManager.find(Book.class, bookId, LockModeType.PESSIMISTIC_WRITE);
@@ -68,7 +68,7 @@ public class BookOrderService {
                 .build();
         orderRepository.save(bookOrder);
 
-        return PlaceOrderResponseDto.builder()
+        return OrderDto.builder()
                 .id(bookOrder.getId())
                 .bookId(book.getId())
                 .bookName(book.getTitle())
@@ -76,5 +76,19 @@ public class BookOrderService {
                 .purchaseDate(bookOrder.getPurchaseDate())
                 .customerId(bookOrder.getCustomerId())
                 .build();
+    }
+
+    public List<OrderDto> getAllOrders(){
+        return orderRepository.findAll().stream()
+                .map(
+                        bookOrder -> OrderDto.builder()
+                                .id(bookOrder.getId())
+                                .bookId(bookOrder.getBookId())
+                                .bookName(bookOrder.getBookName())
+                                .bookPrice(bookOrder.getBookPrice())
+                                .purchaseDate(bookOrder.getPurchaseDate())
+                                .customerId(bookOrder.getCustomerId())
+                                .build()
+                ).toList();
     }
 }
