@@ -21,10 +21,14 @@ public class BookOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private Long bookId;
+
+    private String bookName;
+
+    private Double bookPrice;
+
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate purchaseDate;
-
-    private Long bookId;
 
     private Long customerId;
 
