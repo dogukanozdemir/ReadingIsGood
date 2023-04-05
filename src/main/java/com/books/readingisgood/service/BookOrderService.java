@@ -8,7 +8,6 @@ import com.books.readingisgood.dto.order.OrderDto;
 import com.books.readingisgood.entity.Book;
 import com.books.readingisgood.entity.BookOrder;
 import com.books.readingisgood.entity.Customer;
-import com.books.readingisgood.repository.BookRepository;
 import com.books.readingisgood.repository.BookOrderRepository;
 import com.books.readingisgood.validation.DateValidator;
 import jakarta.persistence.EntityManager;
@@ -65,8 +64,8 @@ public class BookOrderService {
         BookOrder bookOrder = BookOrder.builder()
                 .bookId(bookId)
                 .bookName(book.getTitle())
-                .purchasedAmount(requestDto.getAmount())
-                .paidAmount(requestDto.getAmount() * book.getPrice())
+                .purchasedBookCount(requestDto.getAmount())
+                .purchasedAmount(requestDto.getAmount() * book.getPrice())
                 .purchaseDate(purchaseDate)
                 .customerId(currentCustomer.getId())
                 .build();
@@ -75,8 +74,8 @@ public class BookOrderService {
                 .id(bookOrder.getId())
                 .bookId(book.getId())
                 .bookName(book.getTitle())
-                .paidAmount(bookOrder.getPaidAmount())
                 .purchasedAmount(bookOrder.getPurchasedAmount())
+                .purchasedBookCount(bookOrder.getPurchasedBookCount())
                 .purchaseDate(bookOrder.getPurchaseDate())
                 .customerId(bookOrder.getCustomerId())
                 .build();
@@ -89,8 +88,8 @@ public class BookOrderService {
                                 .id(bookOrder.getId())
                                 .bookId(bookOrder.getBookId())
                                 .bookName(bookOrder.getBookName())
+                                .purchasedBookCount(bookOrder.getPurchasedBookCount())
                                 .purchasedAmount(bookOrder.getPurchasedAmount())
-                                .paidAmount(bookOrder.getPaidAmount())
                                 .purchaseDate(bookOrder.getPurchaseDate())
                                 .customerId(bookOrder.getCustomerId())
                                 .build()
@@ -111,8 +110,8 @@ public class BookOrderService {
                                 .id(bookOrder.getId())
                                 .bookId(bookOrder.getBookId())
                                 .bookName(bookOrder.getBookName())
+                                .purchasedBookCount(bookOrder.getPurchasedBookCount())
                                 .purchasedAmount(bookOrder.getPurchasedAmount())
-                                .paidAmount(bookOrder.getPaidAmount())
                                 .purchaseDate(bookOrder.getPurchaseDate())
                                 .customerId(bookOrder.getCustomerId())
                                 .build()
@@ -129,8 +128,8 @@ public class BookOrderService {
                                     .id(bookOrder.getId())
                                     .bookId(bookOrder.getBookId())
                                     .bookName(bookOrder.getBookName())
+                                    .purchasedBookCount(bookOrder.getPurchasedBookCount())
                                     .purchasedAmount(bookOrder.getPurchasedAmount())
-                                    .paidAmount(bookOrder.getPaidAmount())
                                     .purchaseDate(bookOrder.getPurchaseDate())
                                     .customerId(bookOrder.getCustomerId())
                                     .build()

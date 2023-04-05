@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -25,9 +24,9 @@ public class BookOrder {
 
     private String bookName;
 
-    private Double paidAmount;
+    private Double purchasedAmount;
 
-    private Integer purchasedAmount;
+    private Integer purchasedBookCount;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate purchaseDate;

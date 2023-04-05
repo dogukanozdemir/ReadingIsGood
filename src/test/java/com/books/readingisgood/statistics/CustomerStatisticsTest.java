@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -41,13 +40,13 @@ class CustomerStatisticsTest {
 
         List<BookOrder> bookOrders = Arrays.asList(
                 BookOrder.builder().id(1L).customerId(1L).purchaseDate(LocalDate.of(2022, 1, 1))
-                        .purchasedAmount(2).paidAmount(20.0).build(),
+                        .purchasedBookCount(2).purchasedAmount(20.0).build(),
                 BookOrder.builder().id(2L).customerId(1L).purchaseDate(LocalDate.of(2022, 1, 2))
-                        .purchasedAmount(3).paidAmount(30.0).build(),
+                        .purchasedBookCount(3).purchasedAmount(30.0).build(),
                 BookOrder.builder().id(3L).customerId(1L).purchaseDate(LocalDate.of(2022, 2, 1))
-                        .purchasedAmount(1).paidAmount(10.0).build(),
+                        .purchasedBookCount(1).purchasedAmount(10.0).build(),
                 BookOrder.builder().id(4L).customerId(1L).purchaseDate(LocalDate.of(2022, 2, 2))
-                        .purchasedAmount(4).paidAmount(40.0).build()
+                        .purchasedBookCount(4).purchasedAmount(40.0).build()
         );
         when(bookOrderRepository.findByCustomerIdAndYear(1L, 2022)).thenReturn(bookOrders);
 

@@ -9,7 +9,6 @@ import com.books.readingisgood.entity.Customer;
 import com.books.readingisgood.repository.BookOrderRepository;
 import com.books.readingisgood.service.BookOrderService;
 import com.books.readingisgood.service.BookService;
-import com.books.readingisgood.validation.DateValidator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,8 +78,8 @@ class PlaceAnOrderTest {
                         .id(1L)
                         .bookId(book.getId())
                         .bookName(book.getTitle())
-                        .paidAmount(20.0)
-                        .purchasedAmount(2)
+                        .purchasedAmount(20.0)
+                        .purchasedBookCount(2)
                         .purchaseDate(LocalDate.now())
                         .customerId(customer.getId())
                         .build()
@@ -95,8 +94,8 @@ class PlaceAnOrderTest {
 
         assertEquals(book.getId(), order.getBookId());
         assertEquals(book.getTitle(), order.getBookName());
-        assertEquals(20.0, order.getPaidAmount());
-        assertEquals(2, order.getPurchasedAmount());
+        assertEquals(20.0, order.getPurchasedAmount());
+        assertEquals(2, order.getPurchasedBookCount());
         assertEquals(LocalDate.now(), order.getPurchaseDate());
         assertEquals(customer.getId(), order.getCustomerId());
     }
