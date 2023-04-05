@@ -1,20 +1,15 @@
 package com.books.readingisgood.service;
 
-import com.books.readingisgood.authentication.util.AuthUtil;
 import com.books.readingisgood.dto.book.BookDto;
 import com.books.readingisgood.dto.book.CreateBookRequestDto;
 import com.books.readingisgood.dto.book.UpdateBookStockRequestDto;
 import com.books.readingisgood.entity.Book;
-import com.books.readingisgood.entity.Customer;
 import com.books.readingisgood.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
