@@ -21,8 +21,6 @@ public class PlaceOrderRequestDto {
     private Long bookId;
 
     @NotNull
-
-    @NotNull
     @Positive
     private int amount;
 
