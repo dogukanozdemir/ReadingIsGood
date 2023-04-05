@@ -45,7 +45,6 @@ public class BookOrderService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.format("Book with id %d does not exist",bookId));
         }
-
         int currentStockQuantity = book.getQuantityInStock();
         if(currentStockQuantity < requestDto.getAmount()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -58,11 +57,10 @@ public class BookOrderService {
         LocalDate purchaseDate = DateValidator.validate(requestDto.getPurchaseDate());
         if(purchaseDate == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Invalid date, please make sure the date provided matches the pattern 'yyyy-MM-dd'");
+                    "Please use the format 'yyyy-MM-dd' for the date provided as it seems to be invalid.");
         }
 
-
-        bookService.updateBookStockByEntity(book,currentStockQuantity - 1);
+        bookService.updateBookStockByEntity(book,currentStockQuantity - requestDto.getAmount());
 
         BookOrder bookOrder = BookOrder.builder()
                 .bookId(bookId)
@@ -73,7 +71,6 @@ public class BookOrderService {
                 .customerId(currentCustomer.getId())
                 .build();
         bookOrderRepository.save(bookOrder);
-
         return OrderDto.builder()
                 .id(bookOrder.getId())
                 .bookId(book.getId())
@@ -105,7 +102,7 @@ public class BookOrderService {
         LocalDate endDate = DateValidator.validate(end);
         if(startDate == null || endDate == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Invalid date, please make sure the date provided matches the pattern 'yyyy-MM-dd'");
+                    "Please use the format 'yyyy-MM-dd' for the date provided as it seems to be invalid");
         }
         return bookOrderRepository.findByPurchaseDateBetween(startDate,endDate)
                 .stream()
