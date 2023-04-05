@@ -1,6 +1,7 @@
 package com.books.readingisgood.entity;
 
 import com.books.readingisgood.enums.Role;
+import com.books.readingisgood.logging.CustomerLogListener;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@EntityListeners(CustomerLogListener.class)
 public class Customer {
 
     @Id

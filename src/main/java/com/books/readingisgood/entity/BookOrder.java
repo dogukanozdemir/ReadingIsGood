@@ -1,5 +1,7 @@
 package com.books.readingisgood.entity;
 
+import com.books.readingisgood.logging.BookLogListener;
+import com.books.readingisgood.logging.BookOrderLogListener;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Entity
+@EntityListeners(BookOrderLogListener.class)
 public class BookOrder {
 
     @Id
