@@ -6,14 +6,12 @@ import com.books.readingisgood.dto.statistics.StatisticsDto;
 import com.books.readingisgood.entity.BookOrder;
 import com.books.readingisgood.entity.Customer;
 import com.books.readingisgood.repository.BookOrderRepository;
-import com.books.readingisgood.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Month;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -40,8 +38,8 @@ public class StatisticsService {
                                     .build());
 
             statistics.setTotalOrderCount(statistics.getTotalOrderCount() + 1);
-            statistics.setTotalBookCount(statistics.getTotalBookCount() + order.getPurchasedAmount());
-            statistics.setTotalPurchasedAmount(statistics.getTotalPurchasedAmount() + order.getPaidAmount());
+            statistics.setTotalBookCount(statistics.getTotalBookCount() + order.getPurchasedBookCount());
+            statistics.setTotalPurchasedAmount(statistics.getTotalPurchasedAmount() + order.getPurchasedAmount());
         }
         return new ArrayList<>(statisticsMap.values());
     }

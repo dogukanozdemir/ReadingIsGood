@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -45,8 +44,8 @@ class GetOrdersByCustomerTest {
                 .id(1L)
                 .bookId(1L)
                 .bookName("Book A")
-                .purchasedAmount(2)
-                .paidAmount(20.0)
+                .purchasedBookCount(2)
+                .purchasedAmount(20.0)
                 .purchaseDate(purchaseDate)
                 .customerId(customerId)
                 .build();
@@ -67,8 +66,8 @@ class GetOrdersByCustomerTest {
         assertEquals(bookOrder.getId(), orderDto.getId());
         assertEquals(bookOrder.getBookId(), orderDto.getBookId());
         assertEquals(bookOrder.getBookName(), orderDto.getBookName());
+        assertEquals(bookOrder.getPurchasedBookCount(), orderDto.getPurchasedBookCount());
         assertEquals(bookOrder.getPurchasedAmount(), orderDto.getPurchasedAmount());
-        assertEquals(bookOrder.getPaidAmount(), orderDto.getPaidAmount());
         assertEquals(bookOrder.getPurchaseDate(), orderDto.getPurchaseDate());
         assertEquals(bookOrder.getCustomerId(), orderDto.getCustomerId());
     }

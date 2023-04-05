@@ -48,8 +48,8 @@ class GetAllOrdersBetweenTest {
                 .id(1L)
                 .bookId(book.getId())
                 .bookName(book.getTitle())
-                .purchasedAmount(2)
-                .paidAmount(book.getPrice() * 2)
+                .purchasedBookCount(2)
+                .purchasedAmount(book.getPrice() * 2)
                 .purchaseDate(LocalDate.now())
                 .customerId(customer.getId())
                 .build();
@@ -62,8 +62,8 @@ class GetAllOrdersBetweenTest {
                 .id(order.getId())
                 .bookId(order.getBookId())
                 .bookName(order.getBookName())
+                .purchasedBookCount(order.getPurchasedBookCount())
                 .purchasedAmount(order.getPurchasedAmount())
-                .paidAmount(order.getPaidAmount())
                 .purchaseDate(order.getPurchaseDate())
                 .customerId(order.getCustomerId())
                 .build();
