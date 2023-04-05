@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.books</groupId>
 	<artifactId>readingisgood</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>readingisgood</name>
 	<description>A centralized book warehouse</description>
 	<properties>
