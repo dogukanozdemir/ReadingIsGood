@@ -53,6 +53,7 @@ public class BookService {
                 .id(book.getId())
                 .title(book.getTitle())
                 .author(book.getAuthor())
+                .price(book.getPrice())
                 .quantityInStock(book.getQuantityInStock())
                 .totalPages(book.getTotalPages())
                 .build();

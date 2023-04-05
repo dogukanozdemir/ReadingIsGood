@@ -1,6 +1,5 @@
 package com.books.readingisgood.entity;
 
-import com.books.readingisgood.logging.BookLogListener;
 import com.books.readingisgood.logging.BookOrderLogListener;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,12 +19,12 @@ import java.time.LocalDate;
 public class BookOrder {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long bookId;
 
-    private String bookName;
+    private String bookTitle;
 
     private Double purchasedAmount;
 

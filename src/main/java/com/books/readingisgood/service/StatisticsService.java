@@ -25,7 +25,7 @@ public class StatisticsService {
         Customer currentCustomer = authUtil.getCurrentCustomer();
         List<BookOrder> bookOrders = bookOrderRepository.findByCustomerIdAndYear(currentCustomer.getId(), year);
 
-        Map<Integer, StatisticsDto> statisticsMap = new TreeMap<>();
+        Map<Integer, StatisticsDto> statisticsMap = new TreeMap<>(Collections.reverseOrder());
         for (BookOrder order : bookOrders) {
             int monthIndex = order.getPurchaseDate().getMonthValue();
 

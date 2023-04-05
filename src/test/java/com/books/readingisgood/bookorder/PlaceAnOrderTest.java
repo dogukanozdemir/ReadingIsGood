@@ -77,7 +77,7 @@ class PlaceAnOrderTest {
                 BookOrder.builder()
                         .id(1L)
                         .bookId(book.getId())
-                        .bookName(book.getTitle())
+                        .bookTitle(book.getTitle())
                         .purchasedAmount(20.0)
                         .purchasedBookCount(2)
                         .purchaseDate(LocalDate.now())

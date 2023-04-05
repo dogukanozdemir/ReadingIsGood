@@ -20,17 +20,18 @@ public class BookLogListener {
     @PostPersist
     public void bookAdded(Book book) {
         Customer currentCustomer = authUtil.getCurrentCustomer();
-        log.info(String.format("%s added a new book with id %d - %s",
+        log.info(String.format("%s added a new book titled %s - %s",
                 currentCustomer.getUsername(),
-                book.getId(),
+                book.getTitle(),
                 LocalDateTime.now()));
     }
 
     @PostUpdate
     public void bookUpdated(Book book) {
         Customer currentCustomer = authUtil.getCurrentCustomer();
-        log.info(String.format("%s added change stock quantity to %d - %s",
+        log.info(String.format("%s changed %s's stock quantity to %d - %s",
                 currentCustomer.getUsername(),
+                book.getTitle(),
                 book.getQuantityInStock(),
                 LocalDateTime.now()));
     }

@@ -32,7 +32,7 @@ class GetAllOrdersTest {
         BookOrder bookOrder = BookOrder.builder()
                 .id(1L)
                 .bookId(2L)
-                .bookName("The Great Gatsby")
+                .bookTitle("The Great Gatsby")
                 .purchasedBookCount(1)
                 .purchasedAmount(9.99)
                 .purchaseDate(LocalDate.of(2022, 1, 1))
@@ -48,7 +48,7 @@ class GetAllOrdersTest {
         OrderDto orderDto = result.get(0);
         assertEquals(bookOrder.getId(), orderDto.getId());
         assertEquals(bookOrder.getBookId(), orderDto.getBookId());
-        assertEquals(bookOrder.getBookName(), orderDto.getBookName());
+        assertEquals(bookOrder.getBookTitle(), orderDto.getBookName());
         assertEquals(bookOrder.getPurchasedBookCount(), orderDto.getPurchasedBookCount());
         assertEquals(bookOrder.getPurchasedAmount(), orderDto.getPurchasedAmount());
         assertEquals(bookOrder.getPurchaseDate(), orderDto.getPurchaseDate());
