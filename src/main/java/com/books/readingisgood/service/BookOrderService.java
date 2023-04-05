@@ -47,10 +47,9 @@ public class BookOrderService {
         int currentStockQuantity = book.getQuantityInStock();
         if(currentStockQuantity < requestDto.getAmount()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.format("You ordered to buy %d but there is only %d left from the book you requested %d",
+                    String.format("You ordered to buy %d but there is only %d left from the book you requested",
                             requestDto.getAmount(),
-                            currentStockQuantity,
-                            bookId));
+                            currentStockQuantity));
         }
 
         LocalDate purchaseDate = DateValidator.validate(requestDto.getPurchaseDate());

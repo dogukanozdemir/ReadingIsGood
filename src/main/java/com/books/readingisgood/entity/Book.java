@@ -1,5 +1,6 @@
 package com.books.readingisgood.entity;
 
+import com.books.readingisgood.logging.BookLogListener;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
+@EntityListeners(BookLogListener.class)
 public class Book {
 
 
