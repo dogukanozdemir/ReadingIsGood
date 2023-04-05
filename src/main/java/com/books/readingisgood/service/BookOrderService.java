@@ -39,7 +39,7 @@ public class BookOrderService {
     @Transactional
     public OrderDto placeAnOrder(PlaceOrderRequestDto requestDto){
         Customer currentCustomer = authUtil.getCurrentCustomer();
-        Long bookId = requestDto.getBookId();//
+        Long bookId = requestDto.getBookId();
         Book book = entityManager.find(Book.class, bookId, LockModeType.PESSIMISTIC_WRITE);
         if(book == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
