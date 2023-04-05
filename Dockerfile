@@ -1,10 +1,4 @@
-FROM openjdk:17 as buildstage
-WORKDIR /app
- 
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
- 
-COPY src ./src
- 
-CMD ["./mvnw", "spring-boot:run"]
+FROM openjdk:17-alpine
+ARG JAR_FILE=target/*.jar
+COPY ./target/readingisgood-1.0.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
