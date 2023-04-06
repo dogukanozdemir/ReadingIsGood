@@ -54,16 +54,16 @@ class CustomerStatisticsTest {
 
         assertEquals(2, result.size());
 
-        StatisticsDto statisticsJan = result.get(0);
-        assertEquals("JANUARY", statisticsJan.getMonth());
-        assertEquals(2, statisticsJan.getTotalOrderCount());
-        assertEquals(5, statisticsJan.getTotalBookCount());
-        assertEquals(50.0, statisticsJan.getTotalPurchasedAmount());
-
-        StatisticsDto statisticsFeb = result.get(1);
+        StatisticsDto statisticsFeb = result.get(0);
         assertEquals("FEBRUARY", statisticsFeb.getMonth());
         assertEquals(2, statisticsFeb.getTotalOrderCount());
         assertEquals(5, statisticsFeb.getTotalBookCount());
         assertEquals(50.0, statisticsFeb.getTotalPurchasedAmount());
+
+        StatisticsDto statisticsJan = result.get(1);
+        assertEquals("JANUARY", statisticsJan.getMonth());
+        assertEquals(2, statisticsJan.getTotalOrderCount());
+        assertEquals(5, statisticsJan.getTotalBookCount());
+        assertEquals(50.0, statisticsJan.getTotalPurchasedAmount());
     }
 }

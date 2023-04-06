@@ -18,9 +18,9 @@ public class BookOrderLogListener {
     private AuthUtil authUtil;
 
     @PostPersist
-    public void OrderPlaced(BookOrder bookOrder) {
+    public void orderPlaced(BookOrder bookOrder) {
         Customer currentCustomer = authUtil.getCurrentCustomer();
-        log.info(String.format("%s added place an order for %d book(s) and paid %f in total - %s",
+        log.info(String.format("%s placed an order for %d book(s) and paid %.2f$ in total - %s",
                 currentCustomer.getUsername(),
                 bookOrder.getPurchasedBookCount(),
                 bookOrder.getPurchasedAmount(),

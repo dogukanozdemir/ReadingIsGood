@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,7 +51,8 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(value = {JwtException.class, AuthenticationException.class})
+    @ExceptionHandler(value = {JwtException.class,
+            AuthenticationException.class, InsufficientAuthenticationException.class})
     public ResponseEntity<Object> jwtExceptionHandler(HttpServletRequest req, HttpServletResponse res, Exception e){
         log.error("exception",e);
         return new ResponseEntity<>(
