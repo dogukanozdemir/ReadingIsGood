@@ -1,20 +1,29 @@
 # Introduction
-Welcome to the documentation for the Product Service API. This API is designed to allow clients to manage their products in an efficient and secure way. The API is implemented using Java Spring Boot, and utilizes a MySQL database for storing data. The API supports the following features:
+Welcome to the documentation for the ReadingIsGood Service API. 
 
-A client can create new products in the service
-A client can modify its own products but cannot modify others’ products
-A client can delete its own products but cannot modify others’ products
-A client can view all products in the service
+ReadingIsGood is an online book retail firm that operates solely on the Internet. Their main goal is to provide customers with quick delivery of books from their centralized warehouse, typically within the same day. To achieve this, ReadingIsGood places a high priority on maintaining stock consistency. 
 
-Before a client can use the service, they must first register or log in to the system. Once authenticated, the client will receive a JWT token that will be used to authenticate all subsequent requests.
+This API provides various functionalities to interact with the ReadingIsGood system, including registering new customers, placing orders, tracking book stock, viewing order details, and querying monthly statistics. This documentation outlines the endpoints available and their respective request and response formats.
+
+The API is implemented using Java Spring Boot, and utilizes a MySQL database for storing data. The API supports the following features:
+
+* Registering New Customer
+* Placing a new order
+* Tracking the stock of books
+* List all orders of the customer
+* Viewing the order details
+* Query Monthly Statistics
+
+Before a customer can use the service, they must first register and log in to the system. Once authenticated, the customer will receive a JWT token that will be used to authenticate all subsequent requests.
 
 This document outlines the API endpoints, HTTP verbs, headers, responses, and tests that are used in this project.
+Note: if you want to skip this section, you can download and build the project and read the documentation provided by Swagger.
 
 # Authentication
 
-In order to use the API, clients must authenticate themselves with valid credentials. There are two authentication endpoints available: api/auth/register and api/auth/login.
+In order to use the API, customers must authenticate themselves with valid credentials.
 
-Clients can register themselves by sending a POST request to the `/api/auth/register` endpoint with their username and password. After a successful registration, clients must then send a POST request to the `/api/auth/login` endpoint with their registered credentials to receive a JWT token, which must be included in the Authorization header of all subsequent requests. If a client attempts to access a protected endpoint without a valid JWT token, they will receive a 403 Forbidden error response.
+Customers can register themselves by sending a POST request to the `/api/auth/register` endpoint with their email, username and password. After a successful registration, Customers must then send a POST request to the `/api/auth/login` endpoint with their registered credentials to receive a JWT token, which must be included in the Authorization header of all subsequent requests. If a Customer attempts to access a protected endpoint without a valid JWT token, they will receive an error response.
 
 ## Register
 To register a new client, use the following endpoint:
@@ -31,8 +40,9 @@ To register a new client, use the following endpoint:
 
 ```json
 {
-  "username": "johndoe",
-  "password": "password123"
+    "username" : "johndoe",
+    "email" : "johdoe@gmail.com",
+    "password" : "password123"
 }
 ```
 
@@ -40,7 +50,7 @@ To register a new client, use the following endpoint:
 
 ```json
 {
-  "message": "Client johndoe registered to system successfully"
+    "message": "johdoe@gmail.com registered successfully, please login using your credentials to generate a token."
 }
 
 ```
