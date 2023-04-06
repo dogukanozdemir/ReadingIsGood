@@ -16,6 +16,8 @@
 
 # Introduction
 
+**NOTE: The database used for the project is remote MySQL database, and the tables are empty.**
+
 Welcome to the documentation for the ReadingIsGood Service API. 
 
 ReadingIsGood is an online book retail firm that operates solely on the Internet. Their main goal is to provide customers with quick delivery of books from their centralized warehouse, typically within the same day. To achieve this, ReadingIsGood places a high priority on maintaining stock consistency. 
