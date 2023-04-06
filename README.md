@@ -13,7 +13,9 @@
 6. [Installation and Prequisites](#install)
 
 <a name="intro"/>
+
 # Introduction
+
 Welcome to the documentation for the ReadingIsGood Service API. 
 
 ReadingIsGood is an online book retail firm that operates solely on the Internet. Their main goal is to provide customers with quick delivery of books from their centralized warehouse, typically within the same day. To achieve this, ReadingIsGood places a high priority on maintaining stock consistency. 
@@ -35,8 +37,8 @@ This document outlines the structure and provides information about the API, Thi
 You can download and build the project and read the documentation provided by **Swagger** (more information below).
 
 <a name="auth"/>
-# Authentication
 
+# Authentication
 In order to use the API, customers must authenticate themselves with valid credentials.
 
 Customers can register themselves by sending a POST request to the `/api/auth/register` endpoint with their email, username and password. After a successful registration, Customers must then send a POST request to the `/api/auth/login` endpoint with their registered credentials to receive a JWT token, which must be included in the Authorization header of all subsequent requests. If a Customer attempts to access a protected endpoint without a valid JWT token, they will receive an error response.
@@ -169,7 +171,7 @@ The API logs any changes that occur on an entity using the EntityListeners annot
 
 For example, if a customer places an order to buy a book, the following log message will be generated:
 
-*johndoe added place an order for 1 book(s) and paid 29.990000 in total - 2023-04-06T03:48:59.532697100*
+*johndoe placed an order for 2 book(s) and paid 29.990000 in total - 2023-04-06T03:48:59.532697100*
 
 This allows for easy tracking and monitoring of changes made to entities within the API.
 
@@ -208,12 +210,35 @@ cd ReadingIsGood
 *THIS STEP IS CRUCIAL TO USE DOCKER, WITHOUT THE GENERATION A .JAR FILE, DOCKER WON'T BE ABLE BUILD*
 
 ```console
-mvn install
+mvn clean install
 ```
 
 This will download all the necessary dependencies and build the project.
 
 Open the IDE of your choice to run or edit the program. Intellij IDEA is highly recommended
+
+## Docker
+
+Before starting with this step make sure you have followed all the steps above and produced a jar file inside the project folder
+in the directory `/target/readingisgood-1.0.jar`
+
+To build and run the project using Docker, first navigate to the project directory where the Dockerfile is placed.
+Run the following command
+
+```console
+docker build -t readingapi .
+```
+
+This command builds a Docker image for the ReadingIsGood project, with a tag name of "readingapi".
+Once the image is successfully built, you can run the application inside a Docker container. 
+While still being in the project directory, Use the following command:
+
+```console
+docker run -p 8080:8080 readingapi
+```
+
+This command starts the container and maps port 8080 of the container to port 8080 of the host machine, allowing you to access the application through localhost:8080.
+
 
 # License
 
