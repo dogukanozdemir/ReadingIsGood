@@ -1,3 +1,18 @@
+# Table of Contents
+
+1. [Introduction](#intro)
+
+2. [Authentication](#auth)
+
+3. [Validation](#validation)
+
+4. [Global Exception Handling](#geh)
+
+5. [Logging](#log)
+
+6. [Installation and Prequisites](#install)
+
+<a name="intro"/>
 # Introduction
 Welcome to the documentation for the ReadingIsGood Service API. 
 
@@ -16,9 +31,10 @@ The API is implemented using Java Spring Boot, and utilizes a MySQL database for
 
 Before a customer can use the service, they must first register and log in to the system. Once authenticated, the customer will receive a JWT token that will be used to authenticate all subsequent requests.
 
-This document outlines the API endpoints, HTTP verbs, headers, responses, and tests that are used in this project.
-Note: if you want to skip this section, you can download and build the project and read the documentation provided by Swagger.
+This document outlines the structure and provides information about the API, This is not a **API specification**.
+You can download and build the project and read the documentation provided by **Swagger** (more information below).
 
+<a name="auth"/>
 # Authentication
 
 In order to use the API, customers must authenticate themselves with valid credentials.
@@ -82,165 +98,117 @@ To log in to the service and generate a JWT token, use the following endpoint:
 
 ```json
 {
-  "username": "johndoe",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...<jwt token>"
 }
 
 ```
 
-# Service API Endpoints
-The following API endpoints are supported by the service?
+<a name="validation"/>
 
-## Create a new product
+# Validation
 
-**Endpoint: `/product`**
+The API validates all incoming requests, whether the information is passed through request parameters or request bodies, using the *Jakarta*, Any values that are considered invalid are reported and are responded to the client with appropriate error messages.
 
-**HTTP Verb: `POST`**
+**Example:**
 
-**Headers:**
+Here is an example of aninvalid submission to the endpoint `api/service/book` to create a book is as follows:
 
-* *Content-Type: `application/json`*
-* *Authorization: `Bearer <jwt token>`*
-
-**Request body:**
 
 ```json
 {
-    "name" : "Led TV 4K 3D",
-    "description" : "4K TV with 3D glasses",
-    "color" : "Black",
-    "brand" : "Samsung",
-    "price" : 500
+    "title" : "Lost in the Wind",
+    "author" : "Derek Roberts",
+    "quantityInStock" : -2,
+    "totalPages" : 322
 }
 ```
 
-**Response:**
+**Example Response:**
+
+When the API detects invalid data, it returns an error response to the client, including the current timestamp, an error message, and a detailed list of specific errors:
 
 ```json
 {
-    "id": 102,
-    "clientId": 1,
-    "name": "Led TV 4K 3D",
-    "description": "4K TV with 3D glasses",
-    "price": 500.0,
-    "brand": "Samsung",
-    "color": "Black"
-}
-```
-
-## Modify a product
-
-**Endpoint: `/product/{id}`**
-
-**HTTP Verb: `PUT`**
-
-**Headers:**
-
-* **Content-Type: `application/json`**
-* **Authorization: `Bearer <jwt token>`**
-  
-**Request body:**
-  
-```json
-{
-    "name" : "LED TV",
-    "description" : "4K TV with 3D glasses, discounted",
-    "color" : "Red",
-    "brand" : "Samsung",
-    "price" : 999.99
-}
-```
-
-**Response: **
-
-```json
-{
-    "id": 102,
-    "clientId": 1,
-    "name": "LED TV",
-    "description": "4K TV with 3D glasses, discounted",
-    "price": 999.99,
-    "brand": "Samsung",
-    "color": "Red"
-}
-```
-
-## Delete a product
-**Endpoint: `/product/{id}`**
-
-**HTTP Verb: `DELETE`**
-
-**Headers:**
-
-* **Authorization: `Bearer <jwt token>`**
-
-**Response:**
-  
-```json
-{
-    "message": "Product with id 102 has been deleted"
-}
-```
-
-## View all products
-
-**Endpoint: `/products`**
-
-**HTTP Verb: `GET`**
-
-**Headers:**
-
-* **Authorization: Bearer `<jwt token>`**
-
-**Response:**
-
-```json 
-[
-    {
-        "id": 1,
-        "clientId": 1,
-        "name": "Led TV",
-        "description": "4K TV with 3D glasses",
-        "price": 500.0,
-        "brand": "Samsung",
-        "color": "Black"
-    },
-    {
-        "id": 2,
-        "clientId": 1,
-        "name": "Water gun",
-        "description": "Water gun to splash your friends!",
-        "price": 29.99,
-        "brand": "Toys R us",
-        "color": "Blue"
+    "time": "2023-04-06T03:34:31.8785142",
+    "error": "Constraint Validation Failed",
+    "errors": {
+        "quantityInStock": "must be greater than or equal to 0",
+        "price": "must not be null"
     }
-]
+}
 ```
+
+<a name="geh"/>
+
+# Global Exception Handling
+
+To ensure that the API can handle any exceptions that may occur during runtime, a global exception handling mechanism has been implemented in the codebase. This mechanism ensures that any unhandled exceptions are caught and dealt with in a standardized manner across the API.
+
+Here is an example that handles all of the exceptions that occur during authentication:
+
+```java
+    @ExceptionHandler(value = {JwtException.class,
+            AuthenticationException.class, InsufficientAuthenticationException.class})
+    public ResponseEntity<Object> jwtExceptionHandler(HttpServletRequest req, HttpServletResponse res, Exception e){
+        log.error("exception",e);
+        return new ResponseEntity<>(
+                ExceptionResponse.builder()
+                        .error(e.getMessage())
+                        .time(LocalDateTime.now())
+                        .build(),
+                HttpStatus.UNAUTHORIZED
+        );
+    }
+```
+
+<a name="log"/>
+
+# Logging
+
+The API logs any changes that occur on an entity using the EntityListeners annotation and passes them down to the relevant listener class for the entity. The listener class then logs the change with information on who made the change and when it was made.
+
+For example, if a customer places an order to buy a book, the following log message will be generated:
+
+*johndoe added place an order for 1 book(s) and paid 29.990000 in total - 2023-04-06T03:48:59.532697100*
+
+This allows for easy tracking and monitoring of changes made to entities within the API.
+
+<a name="install"/>
+
+# Open API Specification
+
+he API documentation is generated using Swagger, which is implemented using the springdoc library. Once you have installed and built the source code(More info in the next section), you can access the API documentation from localhost:8080/swagger-ui.html.
+
+The Swagger UI provides a web-based graphical interface that enables users to easily explore and interact with the API. It displays all the available endpoints, methods, input/output parameters, and response types. Additionally, the Swagger UI provides a live testing feature, which allows users to test the API endpoints directly from the documentation page.
+
+The documentation is automatically updated whenever changes are made to the API codebase.
 
 # Installation and Prerequisites
 
 Before you begin, make sure you can satisfy the following versions:
 
 * Java version 17
-* Spring version 3.0.4
+* Spring version 3.0.5
 * Apache maven 3.8.1
 
 ## Download and Build the Code
 
 1. Clone the repository to your local machine using Git:
 ```console
-git clone https://github.com/dogukanozdemir/Product-App.git
+git clone https://github.com/dogukanozdemir/ReadingIsGood.git
 ```
 2. Navigate to the root directory of the project:
 
 ```console
-cd Product-App
+cd ReadingIsGood
 ```
 
 3. Build the project using Maven:
 
+*THIS STEP IS CRUCIAL TO USE DOCKER, WITHOUT THE GENERATION A .JAR FILE, DOCKER WON'T BE ABLE BUILD*
+
 ```console
-mvn clean install
+mvn install
 ```
 
 This will download all the necessary dependencies and build the project.
