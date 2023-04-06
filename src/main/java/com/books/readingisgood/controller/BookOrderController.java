@@ -20,19 +20,19 @@ public class BookOrderController {
     private final BookOrderService bookOrderService;
 
     @PostMapping(value = "/order")
-    @Operation(security = @SecurityRequirement(name = "Bearer Auth"))
+    @Operation(tags = "Order Service",security = @SecurityRequirement(name = "Bearer Auth"))
     public ResponseEntity<OrderDto> orderBook(@Validated @RequestBody PlaceOrderRequestDto requestDto){
         return ResponseEntity.ok(bookOrderService.placeAnOrder(requestDto));
     }
 
     @GetMapping(value = "/orders")
-    @Operation(security = @SecurityRequirement(name = "Bearer Auth"))
+    @Operation(tags = "Order Service",security = @SecurityRequirement(name = "Bearer Auth"))
     public ResponseEntity<List<OrderDto>> getOrders(){
         return ResponseEntity.ok(bookOrderService.getAllOrders());
     }
 
     @GetMapping(value = "/orders/dateInterval")
-    @Operation(security = @SecurityRequirement(name = "Bearer Auth"))
+    @Operation(tags = "Order Service",security = @SecurityRequirement(name = "Bearer Auth"))
     public ResponseEntity<List<OrderDto>> getOrdersByDateInterval(@RequestParam("start") String startDate,
                                                                   @RequestParam("end") String endDate){
 

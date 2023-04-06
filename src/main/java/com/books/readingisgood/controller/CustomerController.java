@@ -19,7 +19,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping("/customer/orders")
-    @Operation(security = @SecurityRequirement(name = "Bearer Auth"))
+    @Operation(tags = "Customer Service",security = @SecurityRequirement(name = "Bearer Auth"))
     public ResponseEntity<OrderByCustomerPageDto> updateCustomer(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize){

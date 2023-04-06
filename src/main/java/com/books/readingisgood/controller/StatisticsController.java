@@ -26,7 +26,7 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @GetMapping("/statistics")
-    @Operation(security = @SecurityRequirement(name = "Bearer Auth"))
+    @Operation(tags = "Statistics Service",security = @SecurityRequirement(name = "Bearer Auth"))
     public List<StatisticsDto> statisticsByMonth(@RequestParam("year") int year){
         return statisticsService.customerStatics(year);
     }

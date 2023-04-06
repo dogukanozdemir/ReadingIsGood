@@ -20,14 +20,14 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping(value = "/book")
-    @Operation(security = @SecurityRequirement(name = "Bearer Auth"))
+    @Operation(tags = "Book Service",security = @SecurityRequirement(name = "Bearer Auth"))
     public ResponseEntity<BookDto> createBook(@Validated @RequestBody CreateBookRequestDto requestDto){
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(bookService.addBook(requestDto));
     }
 
     @PatchMapping(value = "/book/{id}")
-    @Operation(security = @SecurityRequirement(name = "Bearer Auth"))
+    @Operation(tags = "Book Service",security = @SecurityRequirement(name = "Bearer Auth"))
     public ResponseEntity<BookDto> updateBookStock(@Validated @RequestBody UpdateBookStockRequestDto requestDto,
                                                    @PathVariable(value = "id") Long id){
         return ResponseEntity.ok(bookService.updateBookStockById(requestDto,id));
