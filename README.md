@@ -173,7 +173,7 @@ The API logs any changes that occur on an entity using the EntityListeners annot
 
 For example, if a customer places an order to buy a book, the following log message will be generated:
 
-*johndoe placed an order for 2 book(s) and paid 29.990000 in total - 2023-04-06T03:48:59.532697100*
+*johndoe placed an order for 2 book(s) and paid 29.99$in total - 2023-04-06T03:48:59.532697100*
 
 This allows for easy tracking and monitoring of changes made to entities within the API.
 
