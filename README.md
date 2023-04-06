@@ -179,7 +179,7 @@ This allows for easy tracking and monitoring of changes made to entities within 
 
 # Open API Specification
 
-he API documentation is generated using Swagger, which is implemented using the springdoc library. Once you have installed and built the source code(More info in the next section), you can access the API documentation from localhost:8080/swagger-ui.html.
+he API documentation is generated using Swagger, which is implemented using the springdoc library. Once you have installed and built the source code(More info in the next section), you can access the API documentation from `localhost:8080/swagger-ui.html`.
 
 The Swagger UI provides a web-based graphical interface that enables users to easily explore and interact with the API. It displays all the available endpoints, methods, input/output parameters, and response types. Additionally, the Swagger UI provides a live testing feature, which allows users to test the API endpoints directly from the documentation page.
 
